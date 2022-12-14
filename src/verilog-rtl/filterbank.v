@@ -37,16 +37,6 @@ module profir(
 parameter size = 128;
 
 
-//Output registers
-reg [15:0]dout0;
-reg [15:0]dout1;
-reg [15:0]dout2;
-reg [15:0]dout3;
-reg [15:0]dout4;
-reg [15:0]dout5;
-reg [15:0]dout6;
-reg [15:0]dout7;
-
 //Auxiliary variables
 integer j;
 integer i;
@@ -70,7 +60,7 @@ end
 
 //Shift register
 //	Stores the filters' coefficients
-reg [0:17] Hcoeff [0:7] [0:size-1];
+reg [17:0] Hcoeff [0:7] [0:size-1];
 
 always @(posedge clock)
 begin
@@ -116,7 +106,7 @@ end
 
 //Calculate output
 
-reg [0:15] accum [0:8];
+reg [0:41] accum [0:7];
 
 
 always @(posedge clock)
@@ -132,6 +122,8 @@ begin
 			end
 		end
 	end
+
+
 
 end
 
@@ -154,15 +146,6 @@ begin
 	if (reset)
 	begin
 		countaddress <= 5'd0;
-	
-		dout0 <= 16'd0;
-		dout1 <= 16'd0;
-		dout2 <= 16'd0;
-		dout3 <= 16'd0;
-		dout4 <= 16'd0;
-		dout5 <= 16'd0;
-		dout6 <= 16'd0;
-		dout7 <= 16'd0;
 
 		for (i = 0 ; i < size ; i = i+1)
 		begin
@@ -171,7 +154,7 @@ begin
 
 		for (j = 0 ; j < 8 ; j = j+1)
 		begin
-			accum[j] <= 16'd0;
+			accum[j] <= 42'd0;
 			for (i = 0 ; i < size ; i = i+1)
 			begin
 				Hcoeff[0][1] <= 18'd0;
@@ -183,14 +166,15 @@ end
 
 //Assing outputs
 assign coeffaddress = countaddress;
-assign dataout0 = dout0;
-assign dataout1 = dout1;
-assign dataout2 = dout2;
-assign dataout3 = dout3;	
-assign dataout4 = dout4;
-assign dataout5 = dout5;
-assign dataout6 = dout6;
-assign dataout7 = dout7;
+
+assign dataout0 = accum[0]>>16;
+assign dataout1 = accum[1]>>16;
+assign dataout2 = accum[2]>>16;
+assign dataout3 = accum[3]>>16;
+assign dataout4 = accum[4]>>16;
+assign dataout5 = accum[5]>>16;
+assign dataout6 = accum[6]>>16;
+assign dataout7 = accum[7]>>16;
 
 
 endmodule
