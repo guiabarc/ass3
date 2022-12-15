@@ -115,9 +115,10 @@ begin
 	begin
 		for (j = 0; j < 8 ; j = j+1)
 		begin
-			for (i = 0; i < size; i = i+1)
+			for (i = 0; i < size ; i = i+1)
 			begin
-				accum [j] <= $signed(accum[j]) + $signed(data[i])*$signed(Hcoeff[j][i]);
+				// accum [j] <= accum[j] + data[i] * Hcoeff[j][i]*2^16;
+				accum [j] <= $signed(accum[j]) + $signed(data[i]) * $signed(Hcoeff[j][i]*2^16);
 			end
 		end
 	end
@@ -136,7 +137,7 @@ begin
 end
 
 
-// Reset all output to zeros
+// Reset all to zeros
 always @(posedge clock)
 begin
 	if (reset)
@@ -153,7 +154,7 @@ begin
 			accum[j] <= 42'd0;
 			for (i = 0 ; i < size ; i = i+1)
 			begin
-				Hcoeff[0][1] <= 18'd0;
+				Hcoeff[j][i] <= 18'd0;
 			end
 		end
 	end
@@ -163,14 +164,14 @@ end
 //Assing outputs
 assign coeffaddress = countaddress;
 
-assign dataout0 = $signed(accum[0]>>16);
-assign dataout1 = $signed(accum[1]>>16);
-assign dataout2 = $signed(accum[2]>>16);
-assign dataout3 = $signed(accum[3]>>16);
-assign dataout4 = $signed(accum[4]>>16);
-assign dataout5 = $signed(accum[5]>>16);
-assign dataout6 = $signed(accum[6]>>16);
-assign dataout7 = $signed(accum[7]>>16);
+assign dataout0 = accum[0] [16:33];
+assign dataout1 = accum[1] [16:33];
+assign dataout2 = accum[2] [16:33];
+assign dataout3 = accum[3] [16:33];
+assign dataout4 = accum[4] [16:33];
+assign dataout5 = accum[5] [16:33];
+assign dataout6 = accum[6] [16:33];
+assign dataout7 = accum[7] [16:33];
 
 
 endmodule
