@@ -115,16 +115,12 @@ begin
 	begin
 		for (j = 0; j < 8 ; j = j+1)
 		begin
-			for (i = 0; i < size-1; i = i+2)
+			for (i = 0; i < size; i = i+1)
 			begin
-				accum [j] <= accum[j] + data[i]*Hcoeff[j][i];
-				accum [j] <= accum[j] + data[i+1]*Hcoeff[j][i+1];
+				accum [j] <= $signed(accum[j]) + $signed(data[i])*$signed(Hcoeff[j][i]);
 			end
 		end
 	end
-
-
-
 end
 
 
@@ -136,7 +132,7 @@ begin
 	if ( din_enable )
 		countaddress <= 0;
 	else
-		countaddress = countaddress + 1;
+		countaddress <= countaddress + 1;
 end
 
 
@@ -167,14 +163,14 @@ end
 //Assing outputs
 assign coeffaddress = countaddress;
 
-assign dataout0 = accum[0]>>16;
-assign dataout1 = accum[1]>>16;
-assign dataout2 = accum[2]>>16;
-assign dataout3 = accum[3]>>16;
-assign dataout4 = accum[4]>>16;
-assign dataout5 = accum[5]>>16;
-assign dataout6 = accum[6]>>16;
-assign dataout7 = accum[7]>>16;
+assign dataout0 = $signed(accum[0]>>16);
+assign dataout1 = $signed(accum[1]>>16);
+assign dataout2 = $signed(accum[2]>>16);
+assign dataout3 = $signed(accum[3]>>16);
+assign dataout4 = $signed(accum[4]>>16);
+assign dataout5 = $signed(accum[5]>>16);
+assign dataout6 = $signed(accum[6]>>16);
+assign dataout7 = $signed(accum[7]>>16);
 
 
 endmodule
