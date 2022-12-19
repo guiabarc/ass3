@@ -125,7 +125,6 @@ begin
 		counter <= 0;	
 
 		STATE <= 0;
-		NEXTSTATE <= 0;
 
 	end
 
@@ -152,7 +151,6 @@ begin
 			accum7 <= 0;
 
 			STATE <= 0;
-			NEXTSTATE <= 0;
 		end
 
 		//receive input
@@ -199,6 +197,11 @@ begin
 end
 
 always @*
+begin
+	if (reset)
+		NEXTSTATE <= 0;
+	
+	else
 	case (STATE)
 		2'b00 : if(din_enable)			  NEXTSTATE <= 2'b01;
 		2'b01 : 						  NEXTSTATE <= 2'b10;
@@ -206,7 +209,8 @@ always @*
 		2'b11 : if(counter == 7'd63)	  NEXTSTATE <= 2'b00; 
 		default: 						  NEXTSTATE <= 2'b00;
 	endcase
-	
+end
+
 //Assing outputs
 assign coeffaddress = countaddress;
 
