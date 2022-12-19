@@ -189,11 +189,6 @@ begin
 					accum6 <= accum6 + $signed(data[counter*2]) * Hcoeff6_0 + $signed(data[counter*2+1]) * Hcoeff6_1;
 					accum7 <= accum7 + $signed(data[counter*2]) * Hcoeff7_0 + $signed(data[counter*2+1]) * Hcoeff7_1;
 
-					//$display("%d | %d: %b", countaddress, counter, accum0);
-					//$display("	  %b | %b", data[counter*2], Hcoeff0_0);
-					//$display("	  %b | %b", data[counter*2+1], Hcoeff0_1);
-					
-
 					countaddress <= countaddress + 1;
 					counter <= counter + 1;
 					end

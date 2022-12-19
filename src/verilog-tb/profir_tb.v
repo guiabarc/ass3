@@ -215,7 +215,12 @@ begin
   begin
     repeat(1000)			// wait more 1000 clocks and stop simulation
 	  @(posedge clock);
-	  $display(wrong_out);
+
+	//The -8 is here to ignore the fist sample that is a don't care
+	$display("----------------------------------------");
+	$display("Number of wrong outputs: %d", wrong_out-8);
+	$display("----------------------------------------");
+	
 	$stop;
   end
   else
@@ -227,50 +232,57 @@ begin
 	if(goldendataout0 !== dataout0)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout0, dataout0, goldendataout0, goldendataout0);
+		if (goldendataout0 !== 16'bx)
+			$display("Error in filter #0");
 	end
 
 	if(goldendataout1 !== dataout1)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("-----------------");
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout1, dataout1, goldendataout1, goldendataout1);
+		if (goldendataout1 !== 16'bx)
+			$display("Error in filter #1");
 	end
 
 	if(goldendataout2 !== dataout2)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout2, dataout2, goldendataout2, goldendataout2);
+		if (goldendataout2 !== 16'bx)
+			$display("Error in filter #2");
 	end
 
 	if(goldendataout3 !== dataout3)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout3, dataout3, goldendataout3, goldendataout3);
+		if (goldendataout3 !== 16'bx)
+			$display("Error in filter #3");
 	end
 
 	if(goldendataout4 !== dataout4)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout4, dataout4, goldendataout4, goldendataout4);
+		if (goldendataout4 !== 16'bx)
+			$display("Error in filter #4");
 	end
 
 	if(goldendataout5 !== dataout5)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout5, dataout5, goldendataout5, goldendataout5);
+		if (goldendataout5 !== 16'bx)
+			$display("Error in filter #5");
 	end
 
 	if(goldendataout6 !== dataout6)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout6, dataout6, goldendataout6, goldendataout6);
+		if (goldendataout6 !== 16'bx)
+			$display("Error in filter #6");
 	end
 
 	if(goldendataout7 !== dataout7)
 	begin
 		wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d\n  dout: %b (%d)\ngolden: %b (%d)", wrong_out, dataout7, dataout7, goldendataout7, goldendataout7);
+		if (goldendataout7 !== 16'bx)
+			$display("Error in filter #7");
 	end
 	
 	
