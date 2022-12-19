@@ -38,11 +38,12 @@ module profir(
 //Registers
 reg [5:0] countaddress = 0;
 
+reg [6:0] counter = 0;
+
 reg [1:0] STATE;
 reg [1:0] NEXTSTATE;
 
-reg signed [15:0] data_0;
-reg signed [15:0] data_1;
+reg signed [15:0] data [0:127];
 
 reg signed [17:0] Hcoeff0_0;
 reg signed [17:0] Hcoeff0_1;
@@ -77,13 +78,14 @@ reg signed [41:0] accum5;
 reg signed [41:0] accum6;
 reg signed [41:0] accum7;
 
+integer i;
 
 always @(posedge clock)
 begin
 	if(reset)
 	begin
-		data_0 <= 0;
-		data_1 <= 0;
+		for (i = 0 ; i < 128 ; i = i + 1)
+			data[i] <= 0;
 
 		Hcoeff0_0 <= 0;
 		Hcoeff0_1 <= 0;
@@ -120,7 +122,11 @@ begin
 
 		countaddress <= 0;
 
+		counter <= 0;	
+
 		STATE <= 0;
+		NEXTSTATE <= 0;
+
 	end
 
 	else
@@ -128,55 +134,68 @@ begin
 		
 		if(din_enable)
 		begin
-			data_1 = data_0;
-    		data_0 = datain; //receive input
+			for (i = 127 ; i > 0 ; i = i-1)
+				data[i] <= data[i-1];
+			
+			data[0] <= datain;
 
 			countaddress <= 0;
+			counter <= 0;
+
+			accum0 <= 0;
+			accum1 <= 0;
+			accum2 <= 0;
+			accum3 <= 0;
+			accum4 <= 0;
+			accum5 <= 0;
+			accum6 <= 0;
+			accum7 <= 0;
 
 			STATE <= 0;
 			NEXTSTATE <= 0;
 		end
 
 		//receive input
-    	Hcoeff0_0 <= coeff0[17:0]; 
-		Hcoeff0_1 <= coeff0[35:18];
-
-		Hcoeff1_0 <= coeff1[17:0];
-		Hcoeff1_1 <= coeff1[35:18];
-		
-		Hcoeff2_0 <= coeff2[17:0];
-		Hcoeff2_1 <= coeff2[35:18];
-		
-		Hcoeff3_0 <= coeff3[17:0];
-		Hcoeff3_1 <= coeff3[35:18];
-		
-		Hcoeff4_0 <= coeff4[17:0];
-		Hcoeff4_1 <= coeff4[35:18];
-		
-		Hcoeff5_0 <= coeff5[17:0];
-		Hcoeff5_1 <= coeff5[35:18];
-		
-		Hcoeff6_0 <= coeff6[17:0];
-		Hcoeff6_1 <= coeff6[35:18];
-		
-		Hcoeff7_0 <= coeff7[17:0];
-		Hcoeff7_1 <= coeff7[35:18];
+    	Hcoeff0_0 <= $signed(coeff0[17:0] ); 
+		Hcoeff0_1 <= $signed(coeff0[35:18]);
+		Hcoeff1_0 <= $signed(coeff1[17:0] );
+		Hcoeff1_1 <= $signed(coeff1[35:18]);
+		Hcoeff2_0 <= $signed(coeff2[17:0] );
+		Hcoeff2_1 <= $signed(coeff2[35:18]);
+		Hcoeff3_0 <= $signed(coeff3[17:0] );
+		Hcoeff3_1 <= $signed(coeff3[35:18]);
+		Hcoeff4_0 <= $signed(coeff4[17:0] );
+		Hcoeff4_1 <= $signed(coeff4[35:18]);
+		Hcoeff5_0 <= $signed(coeff5[17:0] );
+		Hcoeff5_1 <= $signed(coeff5[35:18]);
+		Hcoeff6_0 <= $signed(coeff6[17:0] );
+		Hcoeff6_1 <= $signed(coeff6[35:18]);
+		Hcoeff7_0 <= $signed(coeff7[17:0] );
+		Hcoeff7_1 <= $signed(coeff7[35:18]);
 
 		STATE <= NEXTSTATE;
 	end
 
 	case (STATE) 
-		2'b10 : 	begin
-					accum0 <= accum0 + data_0 * Hcoeff0_0 + data_1 * Hcoeff0_1;
-					accum1 <= accum1 + data_0 * Hcoeff1_0 + data_1 * Hcoeff1_1;
-					accum2 <= accum2 + data_0 * Hcoeff2_0 + data_1 * Hcoeff2_1;
-					accum3 <= accum3 + data_0 * Hcoeff3_0 + data_1 * Hcoeff3_1;
-					accum4 <= accum4 + data_0 * Hcoeff4_0 + data_1 * Hcoeff4_1;
-					accum5 <= accum5 + data_0 * Hcoeff5_0 + data_1 * Hcoeff5_1;
-					accum6 <= accum6 + data_0 * Hcoeff6_0 + data_1 * Hcoeff6_1;
-					accum7 <= accum7 + data_0 * Hcoeff7_0 + data_1 * Hcoeff7_1;
+		2'b01 : 	countaddress <= countaddress + 1;
+		2'b10 : 	countaddress <= countaddress + 1;
+		2'b11 : 	begin
+					accum0 <= accum0 + $signed(data[counter*2]) * Hcoeff0_0 + $signed(data[counter*2+1]) * Hcoeff0_1;
+					accum1 <= accum1 + $signed(data[counter*2]) * Hcoeff1_0 + $signed(data[counter*2+1]) * Hcoeff1_1;
+					accum2 <= accum2 + $signed(data[counter*2]) * Hcoeff2_0 + $signed(data[counter*2+1]) * Hcoeff2_1;
+					accum3 <= accum3 + $signed(data[counter*2]) * Hcoeff3_0 + $signed(data[counter*2+1]) * Hcoeff3_1;
+					accum4 <= accum4 + $signed(data[counter*2]) * Hcoeff4_0 + $signed(data[counter*2+1]) * Hcoeff4_1;
+					accum5 <= accum5 + $signed(data[counter*2]) * Hcoeff5_0 + $signed(data[counter*2+1]) * Hcoeff5_1;
+					accum6 <= accum6 + $signed(data[counter*2]) * Hcoeff6_0 + $signed(data[counter*2+1]) * Hcoeff6_1;
+					accum7 <= accum7 + $signed(data[counter*2]) * Hcoeff7_0 + $signed(data[counter*2+1]) * Hcoeff7_1;
+
+					//$display("%d | %d: %b", countaddress, counter, accum0);
+					//$display("	  %b | %b", data[counter*2], Hcoeff0_0);
+					//$display("	  %b | %b", data[counter*2+1], Hcoeff0_1);
+					
 
 					countaddress <= countaddress + 1;
+					counter <= counter + 1;
 					end
 
 		default : 	countaddress <= 6'd0;
@@ -186,24 +205,24 @@ end
 
 always @*
 	case (STATE)
-		2'b00 : 						  NEXTSTATE <= 2'b01;
+		2'b00 : if(din_enable)			  NEXTSTATE <= 2'b01;
 		2'b01 : 						  NEXTSTATE <= 2'b10;
-		2'b10 : if(countaddress == 6'd63) NEXTSTATE <= 2'b11; 
-		2'b11 : if(din_enable)		 	  NEXTSTATE <= 2'b00;
+		2'b10 : 						  NEXTSTATE <= 2'b11;
+		2'b11 : if(counter == 7'd63)	  NEXTSTATE <= 2'b00; 
 		default: 						  NEXTSTATE <= 2'b00;
 	endcase
 	
 //Assing outputs
 assign coeffaddress = countaddress;
 
-assign dataout0 = accum0 [15:0]/*[31:16]*/;
-assign dataout1 = accum1 [15:0]/*[31:16]*/;
-assign dataout2 = accum2 [15:0]/*[31:16]*/;
-assign dataout3 = accum3 [15:0]/*[31:16]*/;
-assign dataout4 = accum4 [15:0]/*[31:16]*/;
-assign dataout5 = accum5 [15:0]/*[31:16]*/;
-assign dataout6 = accum6 [15:0]/*[31:16]*/;
-assign dataout7 = accum7 [15:0]/*[31:16]*/;
+assign dataout0 = accum0 [31:16];
+assign dataout1 = accum1 [31:16];
+assign dataout2 = accum2 [31:16];
+assign dataout3 = accum3 [31:16];
+assign dataout4 = accum4 [31:16];
+assign dataout5 = accum5 [31:16];
+assign dataout6 = accum6 [31:16];
+assign dataout7 = accum7 [31:16];
 
 
 endmodule
