@@ -1,0 +1,516 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.04 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.04 secs
+ 
+--> 
+Reading design: profir.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "profir.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "profir"
+Output Format                      : NGC
+Target Device                      : xc7a200t-1-ffg1156
+
+---- Source Options
+Top Module Name                    : profir
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 32
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 0
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Analyzing Verilog file "/home/psd28/psd/ass3-master/src/verilog-rtl/filterbank.v" into library work
+Parsing module <profir>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating module <profir>.
+WARNING:HDLCompiler:413 - "/home/psd28/psd/ass3-master/src/verilog-rtl/filterbank.v" Line 201: Result of 7-bit expression is truncated to fit in 6-bit target.
+WARNING:HDLCompiler:413 - "/home/psd28/psd/ass3-master/src/verilog-rtl/filterbank.v" Line 202: Result of 7-bit expression is truncated to fit in 6-bit target.
+WARNING:HDLCompiler:413 - "/home/psd28/psd/ass3-master/src/verilog-rtl/filterbank.v" Line 213: Result of 7-bit expression is truncated to fit in 6-bit target.
+WARNING:HDLCompiler:413 - "/home/psd28/psd/ass3-master/src/verilog-rtl/filterbank.v" Line 214: Result of 8-bit expression is truncated to fit in 7-bit target.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <profir>.
+    Related source file is "/home/psd28/psd/ass3-master/src/verilog-rtl/filterbank.v".
+    Found 18-bit register for signal <Hcoeff0_0>.
+    Found 18-bit register for signal <Hcoeff0_1>.
+    Found 18-bit register for signal <Hcoeff1_0>.
+    Found 18-bit register for signal <Hcoeff1_1>.
+    Found 18-bit register for signal <Hcoeff2_0>.
+    Found 18-bit register for signal <Hcoeff2_1>.
+    Found 18-bit register for signal <Hcoeff3_0>.
+    Found 18-bit register for signal <Hcoeff3_1>.
+    Found 18-bit register for signal <Hcoeff4_0>.
+    Found 18-bit register for signal <Hcoeff4_1>.
+    Found 18-bit register for signal <Hcoeff5_0>.
+    Found 18-bit register for signal <Hcoeff5_1>.
+    Found 18-bit register for signal <Hcoeff6_0>.
+    Found 18-bit register for signal <Hcoeff6_1>.
+    Found 18-bit register for signal <Hcoeff7_0>.
+    Found 18-bit register for signal <Hcoeff7_1>.
+    Found 42-bit register for signal <accum0>.
+    Found 42-bit register for signal <accum1>.
+    Found 42-bit register for signal <accum2>.
+    Found 42-bit register for signal <accum3>.
+    Found 42-bit register for signal <accum4>.
+    Found 42-bit register for signal <accum5>.
+    Found 42-bit register for signal <accum6>.
+    Found 42-bit register for signal <accum7>.
+    Found 6-bit register for signal <coeffaddress>.
+    Found 7-bit register for signal <counter>.
+    Found 2-bit register for signal <STATE>.
+    Found 2048-bit register for signal <n0148[2047:0]>.
+    Found finite state machine <FSM_0> for signal <STATE>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 3                                              |
+    | Outputs            | 2                                              |
+    | Clock              | clock (rising_edge)                            |
+    | Reset              | reset (positive)                               |
+    | Reset type         | synchronous                                    |
+    | Reset State        | 00                                             |
+    | Power Up State     | 00                                             |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 42-bit adder for signal <n0283> created at line 204.
+    Found 8-bit adder for signal <n0216> created at line 204.
+    Found 42-bit adder for signal <accum0[41]_counter[6]_add_54_OUT> created at line 204.
+    Found 42-bit adder for signal <n0289> created at line 205.
+    Found 42-bit adder for signal <accum1[41]_counter[6]_add_61_OUT> created at line 205.
+    Found 42-bit adder for signal <n0295> created at line 206.
+    Found 42-bit adder for signal <accum2[41]_counter[6]_add_68_OUT> created at line 206.
+    Found 42-bit adder for signal <n0301> created at line 207.
+    Found 42-bit adder for signal <accum3[41]_counter[6]_add_75_OUT> created at line 207.
+    Found 42-bit adder for signal <n0307> created at line 208.
+    Found 42-bit adder for signal <accum4[41]_counter[6]_add_82_OUT> created at line 208.
+    Found 42-bit adder for signal <n0313> created at line 209.
+    Found 42-bit adder for signal <accum5[41]_counter[6]_add_89_OUT> created at line 209.
+    Found 42-bit adder for signal <n0319> created at line 210.
+    Found 42-bit adder for signal <accum6[41]_counter[6]_add_96_OUT> created at line 210.
+    Found 42-bit adder for signal <n0325> created at line 211.
+    Found 42-bit adder for signal <accum7[41]_counter[6]_add_103_OUT> created at line 211.
+    Found 6-bit adder for signal <countaddress[5]_GND_1_o_add_104_OUT> created at line 213.
+    Found 7-bit adder for signal <counter[6]_GND_1_o_add_105_OUT> created at line 214.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff0_0[17]_MuLt_49_OUT> created at line 204.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff0_1[17]_MuLt_53_OUT> created at line 204.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff1_0[17]_MuLt_56_OUT> created at line 205.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff1_1[17]_MuLt_60_OUT> created at line 205.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff2_0[17]_MuLt_63_OUT> created at line 206.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff2_1[17]_MuLt_67_OUT> created at line 206.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff3_0[17]_MuLt_70_OUT> created at line 207.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff3_1[17]_MuLt_74_OUT> created at line 207.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff4_0[17]_MuLt_77_OUT> created at line 208.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff4_1[17]_MuLt_81_OUT> created at line 208.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff5_0[17]_MuLt_84_OUT> created at line 209.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff5_1[17]_MuLt_88_OUT> created at line 209.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff6_0[17]_MuLt_91_OUT> created at line 210.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff6_1[17]_MuLt_95_OUT> created at line 210.
+    Found 16x18-bit multiplier for signal <counter[5]_Hcoeff7_0[17]_MuLt_98_OUT> created at line 211.
+    Found 16x18-bit multiplier for signal <counter[6]_Hcoeff7_1[17]_MuLt_102_OUT> created at line 211.
+    Found 16-bit 128-to-1 multiplexer for signal <counter[5]_data[127][15]_wide_mux_48_OUT> created at line 204.
+    Found 16-bit 128-to-1 multiplexer for signal <counter[6]_data[127][15]_wide_mux_52_OUT> created at line 204.
+    Summary:
+	inferred  16 Multiplier(s).
+	inferred  19 Adder/Subtractor(s).
+	inferred 2685 D-type flip-flop(s).
+	inferred   2 Multiplexer(s).
+	inferred   1 Finite State Machine(s).
+Unit <profir> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Multipliers                                          : 16
+ 18x16-bit multiplier                                  : 16
+# Adders/Subtractors                                   : 19
+ 42-bit adder                                          : 16
+ 6-bit adder                                           : 1
+ 7-bit adder                                           : 1
+ 8-bit adder                                           : 1
+# Registers                                            : 27
+ 18-bit register                                       : 16
+ 2048-bit register                                     : 1
+ 42-bit register                                       : 8
+ 6-bit register                                        : 1
+ 7-bit register                                        : 1
+# Multiplexers                                         : 2
+ 16-bit 128-to-1 multiplexer                           : 2
+# FSMs                                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+Synthesizing (advanced) Unit <profir>.
+The following registers are absorbed into counter <countaddress>: 1 register on signal <countaddress>.
+The following registers are absorbed into counter <counter>: 1 register on signal <counter>.
+	Multiplier <Mmult_counter[6]_Hcoeff0_1[17]_MuLt_53_OUT> in block <profir> and adder/subtractor <Madd_accum0[41]_counter[6]_add_54_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff0_1[17]_MuLt_53_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff1_1[17]_MuLt_60_OUT> in block <profir> and adder/subtractor <Madd_accum1[41]_counter[6]_add_61_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff1_1[17]_MuLt_60_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff2_1[17]_MuLt_67_OUT> in block <profir> and adder/subtractor <Madd_accum2[41]_counter[6]_add_68_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff2_1[17]_MuLt_67_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff3_1[17]_MuLt_74_OUT> in block <profir> and adder/subtractor <Madd_accum3[41]_counter[6]_add_75_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff3_1[17]_MuLt_74_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff4_1[17]_MuLt_81_OUT> in block <profir> and adder/subtractor <Madd_accum4[41]_counter[6]_add_82_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff4_1[17]_MuLt_81_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff5_1[17]_MuLt_88_OUT> in block <profir> and adder/subtractor <Madd_accum5[41]_counter[6]_add_89_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff5_1[17]_MuLt_88_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff6_1[17]_MuLt_95_OUT> in block <profir> and adder/subtractor <Madd_accum6[41]_counter[6]_add_96_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff6_1[17]_MuLt_95_OUT>.
+	Multiplier <Mmult_counter[6]_Hcoeff7_1[17]_MuLt_102_OUT> in block <profir> and adder/subtractor <Madd_accum7[41]_counter[6]_add_103_OUT> in block <profir> are combined into a MAC<Maddsub_counter[6]_Hcoeff7_1[17]_MuLt_102_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff0_0[17]_MuLt_49_OUT> in block <profir> and adder/subtractor <Madd_n0283> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff0_0[17]_MuLt_49_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff1_0[17]_MuLt_56_OUT> in block <profir> and adder/subtractor <Madd_n0289> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff1_0[17]_MuLt_56_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff2_0[17]_MuLt_63_OUT> in block <profir> and adder/subtractor <Madd_n0295> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff2_0[17]_MuLt_63_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff3_0[17]_MuLt_70_OUT> in block <profir> and adder/subtractor <Madd_n0301> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff3_0[17]_MuLt_70_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff4_0[17]_MuLt_77_OUT> in block <profir> and adder/subtractor <Madd_n0307> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff4_0[17]_MuLt_77_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff5_0[17]_MuLt_84_OUT> in block <profir> and adder/subtractor <Madd_n0313> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff5_0[17]_MuLt_84_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff6_0[17]_MuLt_91_OUT> in block <profir> and adder/subtractor <Madd_n0319> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff6_0[17]_MuLt_91_OUT>.
+	Multiplier <Mmult_counter[5]_Hcoeff7_0[17]_MuLt_98_OUT> in block <profir> and adder/subtractor <Madd_n0325> in block <profir> are combined into a MAC<Maddsub_counter[5]_Hcoeff7_0[17]_MuLt_98_OUT>.
+Unit <profir> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# MACs                                                 : 16
+ 18x16-to-42-bit MAC                                   : 16
+# Adders/Subtractors                                   : 1
+ 7-bit adder                                           : 1
+# Counters                                             : 2
+ 6-bit up counter                                      : 1
+ 7-bit up counter                                      : 1
+# Registers                                            : 2672
+ Flip-Flops                                            : 2672
+# Multiplexers                                         : 32
+ 1-bit 128-to-1 multiplexer                            : 32
+# FSMs                                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FSM_0> on signal <STATE[1:2]> with user encoding.
+-------------------
+ State | Encoding
+-------------------
+ 00    | 00
+ 01    | 01
+ 10    | 10
+ 11    | 11
+-------------------
+
+Optimizing unit <profir> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block profir, actual ratio is 2.
+FlipFlop counter_0 has been replicated 1 time(s)
+FlipFlop counter_1 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 2193
+ Flip-Flops                                            : 2193
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : profir.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 696
+#      GND                         : 1
+#      INV                         : 2
+#      LUT2                        : 4
+#      LUT3                        : 4
+#      LUT4                        : 4
+#      LUT5                        : 4
+#      LUT6                        : 676
+#      VCC                         : 1
+# FlipFlops/Latches                : 2193
+#      FDR                         : 8
+#      FDRE                        : 2185
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 440
+#      IBUF                        : 306
+#      OBUF                        : 134
+# DSPs                             : 16
+#      DSP48E1                     : 16
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 7a200tffg1156-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:            2193  out of  269200     0%  
+ Number of Slice LUTs:                  694  out of  134600     0%  
+    Number used as Logic:               694  out of  134600     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:   2870
+   Number with an unused Flip Flop:     677  out of   2870    23%  
+   Number with an unused LUT:          2176  out of   2870    75%  
+   Number of fully used LUT-FF pairs:    17  out of   2870     0%  
+   Number of unique control sets:         5
+
+IO Utilization: 
+ Number of IOs:                         441
+ Number of bonded IOBs:                 441  out of    500    88%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     32     3%  
+ Number of DSP48E1s:                     16  out of    740     2%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clock                              | BUFGP                  | 2209  |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: 9.898ns (Maximum Frequency: 101.030MHz)
+   Minimum input arrival time before clock: 2.294ns
+   Maximum output required time after clock: 0.917ns
+   Maximum combinational path delay: No path found
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clock'
+  Clock period: 9.898ns (frequency: 101.030MHz)
+  Total number of paths / destination ports: 16629766 / 2473
+-------------------------------------------------------------------------
+Delay:               9.898ns (Levels of Logic = 5)
+  Source:            data_127_2047 (FF)
+  Destination:       accum2_16 (FF)
+  Source Clock:      clock rising
+  Destination Clock: clock rising
+
+  Data Path: data_127_2047 to accum2_16
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             2   0.478   0.945  data_127_2047 (data_127_2047)
+     LUT6:I0->O            1   0.124   0.776  mux6_10 (mux6_10)
+     LUT6:I2->O            1   0.124   0.776  mux6_6 (mux6_6)
+     LUT6:I2->O           80   0.124   0.562  counter<5>61 (counter[5]_data[127][15]_wide_mux_48_OUT<15>)
+     DSP48E1:A15->PCOUT47    1   4.036   0.000  Maddsub_counter[5]_Hcoeff0_0[17]_MuLt_49_OUT (Maddsub_counter[5]_Hcoeff0_0[17]_MuLt_49_OUT_PCOUT_to_Maddsub_counter[6]_Hcoeff0_1[17]_MuLt_53_OUT_PCIN_47)
+     DSP48E1:PCIN47->P31    2   1.518   0.405  Maddsub_counter[6]_Hcoeff0_1[17]_MuLt_53_OUT (accum0[41]_counter[6]_add_54_OUT<31>)
+     FDRE:D                    0.030          accum0_31
+    ----------------------------------------
+    Total                      9.898ns (6.434ns logic, 3.464ns route)
+                                       (65.0% logic, 35.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clock'
+  Total number of paths / destination ports: 4845 / 4700
+-------------------------------------------------------------------------
+Offset:              2.294ns (Levels of Logic = 2)
+  Source:            din_enable (PAD)
+  Destination:       accum2_16 (FF)
+  Destination Clock: clock rising
+
+  Data Path: din_enable to accum2_16
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O          2051   0.001   1.099  din_enable_IBUF (din_enable_IBUF)
+     LUT4:I0->O          145   0.124   0.576  Reset_OR_DriverANDClockEnable3361 (Reset_OR_DriverANDClockEnable)
+     FDRE:R                    0.494          accum0_31
+    ----------------------------------------
+    Total                      2.294ns (0.619ns logic, 1.675ns route)
+                                       (27.0% logic, 73.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clock'
+  Total number of paths / destination ports: 134 / 134
+-------------------------------------------------------------------------
+Offset:              0.917ns (Levels of Logic = 1)
+  Source:            countaddress_0 (FF)
+  Destination:       coeffaddress<0> (PAD)
+  Source Clock:      clock rising
+
+  Data Path: countaddress_0 to coeffaddress<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              7   0.478   0.439  countaddress_0 (countaddress_0)
+     OBUF:I->O                 0.000          coeffaddress_0_OBUF (coeffaddress<0>)
+    ----------------------------------------
+    Total                      0.917ns (0.478ns logic, 0.439ns route)
+                                       (52.1% logic, 47.9% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock clock
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clock          |    9.898|         |         |         |
+---------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 11.00 secs
+Total CPU time to Xst completion: 10.56 secs
+ 
+--> 
+
+
+Total memory usage is 618408 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    4 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

@@ -1,0 +1,3 @@
+verilog work "../src/verilog-rtl/memory8bank.v"
+verilog work "netgen/par/profir_timesim.v"
+verilog work "../src/verilog-tb/profir_tb.v"

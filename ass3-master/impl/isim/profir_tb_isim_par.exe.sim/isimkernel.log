@@ -1,0 +1,10 @@
+Command line:
+   profir_tb_isim_par.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  34946
+
+Mon Dec 19 19:41:49 2022
+
+
+ Elaboration Time: 1.47 sec

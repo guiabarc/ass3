@@ -40,8 +40,8 @@ reg [5:0] countaddress = 0;
 
 reg [6:0] counter = 0;
 
-reg [1:0] STATE;
-reg [1:0] NEXTSTATE;
+reg [1:0] STATE = 0;
+reg [1:0] NEXTSTATE = 0;
 
 reg signed [15:0] data [0:127];
 
@@ -77,6 +77,29 @@ reg signed [41:0] accum4;
 reg signed [41:0] accum5;
 reg signed [41:0] accum6;
 reg signed [41:0] accum7;
+
+always @*
+begin
+	if (reset)
+		NEXTSTATE <= 0;
+	
+	else
+	case (STATE)
+		2'b00 :
+		begin
+					if(din_enable)			  	  NEXTSTATE <= 2'b01;
+					else						  NEXTSTATE <= 2'b00;
+		end
+		2'b01 : 						  		  NEXTSTATE <= 2'b10;
+		2'b10 : 						  		  NEXTSTATE <= 2'b11;
+		2'b11 : 
+		begin
+					if(counter == 7'd63)	  	  NEXTSTATE <= 2'b00; 
+					else						  NEXTSTATE <= 2'b11;
+		end
+		default: 						  	  	  NEXTSTATE <= 2'b00;
+	endcase
+end
 
 integer i;
 
@@ -194,23 +217,8 @@ begin
 		default : 	countaddress <= 6'd0;
 	endcase
 
-end
-
-always @*
-begin
-	if (reset)
-		NEXTSTATE <= 0;
+end		
 	
-	else
-	case (STATE)
-		2'b00 : if(din_enable)			  NEXTSTATE <= 2'b01;
-		2'b01 : 						  NEXTSTATE <= 2'b10;
-		2'b10 : 						  NEXTSTATE <= 2'b11;
-		2'b11 : if(counter == 7'd63)	  NEXTSTATE <= 2'b00; 
-		default: 						  NEXTSTATE <= 2'b00;
-	endcase
-end
-
 //Assing outputs
 assign coeffaddress = countaddress;
 

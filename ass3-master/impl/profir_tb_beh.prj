@@ -1,0 +1,4 @@
+verilog work "../src/verilog-rtl/memory8bank.v"
+verilog work "../src/verilog-rtl/filterbank.v"
+verilog work "../src/verilog-tb/profir_tb.v"
+verilog work "/home/cadmgr/xilinx/ISE/14.7/ISE//verilog/src/glbl.v"

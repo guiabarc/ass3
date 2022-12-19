@@ -1,0 +1,4 @@
+verilog isim_temp "../src/verilog-rtl/memory8bank.v"
+verilog isim_temp "../src/verilog-rtl/filterbank.v"
+verilog isim_temp "../src/verilog-tb/profir_tb.v"
+verilog isim_temp "/home/cadmgr/xilinx/ISE/14.7/ISE//verilog/src/glbl.v"
