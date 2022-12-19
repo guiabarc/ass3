@@ -140,11 +140,11 @@ begin
   // INSERT HERE YOUR VERIFICATION PROCESS TO COMPARE THE dataout<0-7> 
   // OUTPUTS WITH THE EXPECTED OUTPUT DATA  
 
-	// if(goldendataout !== dataout0)
-	// begin
-		// wrong_out = wrong_out + 1;
-		// $display("Number of wrong samples: %d", wrong_out);
-	// end
+	if(goldendataout !== dataout0)
+	begin
+		wrong_out = wrong_out + 1;
+		$display("Number of wrong samples: %d\n%b\n%b", wrong_out, dataout0, goldendataout);
+	end
 	
 	
 	

@@ -34,133 +34,39 @@ module profir(
 	output signed [15:0]  dataout6,	// Output data of filter 6
 	output signed [15:0]  dataout7	// Output data of filter 7
 );
-parameter size = 128;
 
-
-//Auxiliary variables
-integer j;
-integer i;
-
-//Shift register
-//	Stores the last 128 samples of 16 bits each from datain
-reg signed [15:0] data [0:size-1];
-
-always @(posedge clock)
-begin
-
-	if(reset)
-	begin
-		for (i = 0 ; i < size ; i = i+1)
-		begin
-			data[i] <= 16'd0;
-		end
-	end
-
-	else
-	begin
-		if(din_enable)
-		begin
-    		for (i = size-1; i > 0; i = i-1)
-    		begin
-    		    data[i] <= data[i-1]; //shift
-    		end
-
-    		data[0] <= datain; //receive input
-		end
-	end
-end
-// Example of generator of the addresses to read the coefficients memories:
+//Registers
 reg [5:0] countaddress = 0;
 
-always @(posedge clock)
-begin
-	if (reset || din_enable)
-	begin
-		countaddress <= 0;
-	end
+reg [1:0] STATE;
+reg [1:0] NEXTSTATE;
 
-	else
-	begin
-		countaddress <= countaddress + 1;
-	end
-end
+reg signed [15:0] data_0;
+reg signed [15:0] data_1;
 
-//Shift register
-//	Stores the filters' coefficients
-reg signed [17:0] Hcoeff0 [0:size-1];
-reg signed [17:0] Hcoeff1 [0:size-1];
-reg signed [17:0] Hcoeff2 [0:size-1];
-reg signed [17:0] Hcoeff3 [0:size-1];
-reg signed [17:0] Hcoeff4 [0:size-1];
-reg signed [17:0] Hcoeff5 [0:size-1];
-reg signed [17:0] Hcoeff6 [0:size-1];
-reg signed [17:0] Hcoeff7 [0:size-1];
+reg signed [17:0] Hcoeff0_0;
+reg signed [17:0] Hcoeff0_1;
 
-always @(posedge clock)
-begin
-	if(reset)
-	begin
-		for (i = 0 ; i < size ; i = i+1)
-		begin
-			Hcoeff0 [i] <= 18'd0;
-			Hcoeff1 [i] <= 18'd0;
-			Hcoeff2 [i] <= 18'd0;
-			Hcoeff3 [i] <= 18'd0;
-			Hcoeff4 [i] <= 18'd0;
-			Hcoeff5 [i] <= 18'd0;
-			Hcoeff6 [i] <= 18'd0;
-			Hcoeff7 [i] <= 18'd0;
-		end
-	end
+reg signed [17:0] Hcoeff1_0;
+reg signed [17:0] Hcoeff1_1;
 
-	else
-	begin
-		// if (din_enable)
-		// begin
+reg signed [17:0] Hcoeff2_0;
+reg signed [17:0] Hcoeff2_1;
 
-			for (i = size-1; i > 0; i = i-1)
-			begin
-				Hcoeff0[i] <= Hcoeff0[i-2];
-				Hcoeff1[i] <= Hcoeff1[i-2];
-				Hcoeff2[i] <= Hcoeff2[i-2];
-				Hcoeff3[i] <= Hcoeff3[i-2];
-				Hcoeff4[i] <= Hcoeff4[i-2];
-				Hcoeff5[i] <= Hcoeff5[i-2];
-				Hcoeff6[i] <= Hcoeff6[i-2];
-				Hcoeff7[i] <= Hcoeff7[i-2]; 
-			end
+reg signed [17:0] Hcoeff3_0;
+reg signed [17:0] Hcoeff3_1;
 
-			//receive input
-    		Hcoeff0[0] <= coeff0[17:0]; 
-			Hcoeff0[1] <= coeff0[35:18];
+reg signed [17:0] Hcoeff4_0;
+reg signed [17:0] Hcoeff4_1;
 
-			Hcoeff1[0] <= coeff1[17:0];
-			Hcoeff1[1] <= coeff1[35:18];
-			
-			Hcoeff2[0] <= coeff2[17:0];
-			Hcoeff2[1] <= coeff2[35:18];
-			
-			Hcoeff3[0] <= coeff3[17:0];
-			Hcoeff3[1] <= coeff3[35:18];
-			
-			Hcoeff4[0] <= coeff4[17:0];
-			Hcoeff4[1] <= coeff4[35:18];
-			
-			Hcoeff5[0] <= coeff5[17:0];
-			Hcoeff5[1] <= coeff5[35:18];
-			
-			Hcoeff6[0] <= coeff6[17:0];
-			Hcoeff6[1] <= coeff6[35:18];
-			
-			Hcoeff7[0] <= coeff7[17:0];
-			Hcoeff7[1] <= coeff7[35:18];
-		//end
-	end
+reg signed [17:0] Hcoeff5_0;
+reg signed [17:0] Hcoeff5_1;
 
-end
+reg signed [17:0] Hcoeff6_0;
+reg signed [17:0] Hcoeff6_1;
 
-
-//Calculate output
+reg signed [17:0] Hcoeff7_0;
+reg signed [17:0] Hcoeff7_1;
 
 reg signed [41:0] accum0;
 reg signed [41:0] accum1;
@@ -176,49 +82,128 @@ always @(posedge clock)
 begin
 	if(reset)
 	begin
+		data_0 <= 0;
+		data_1 <= 0;
 
-		accum0 <= 42'd0;
-		accum1 <= 42'd0;
-		accum2 <= 42'd0;
-		accum3 <= 42'd0;
-		accum4 <= 42'd0;
-		accum5 <= 42'd0;
-		accum6 <= 42'd0;
-		accum7 <= 42'd0;
+		Hcoeff0_0 <= 0;
+		Hcoeff0_1 <= 0;
+
+		Hcoeff1_0 <= 0;
+		Hcoeff1_1 <= 0;
+
+		Hcoeff2_0 <= 0;
+		Hcoeff2_1 <= 0;
+
+		Hcoeff3_0 <= 0;
+		Hcoeff3_1 <= 0;
+
+		Hcoeff4_0 <= 0;
+		Hcoeff4_1 <= 0;
+
+		Hcoeff5_0 <= 0;
+		Hcoeff5_1 <= 0;
+
+		Hcoeff6_0 <= 0;
+		Hcoeff6_1 <= 0;
+
+		Hcoeff7_0 <= 0;
+		Hcoeff7_1 <= 0;
+
+		accum0 <= 0;
+		accum1 <= 0;
+		accum2 <= 0;
+		accum3 <= 0;
+		accum4 <= 0;
+		accum5 <= 0;
+		accum6 <= 0;
+		accum7 <= 0;
+
+		countaddress <= 0;
+
+		STATE <= 0;
 	end
 
 	else
 	begin
-		if (din_enable)
+		
+		if(din_enable)
 		begin
-			for (i = 0; i < size ; i = i+1)
-			begin
-				accum0 <= accum0 + data[i] * (Hcoeff0[i]<<16);
-				accum1 <= accum1 + data[i] * (Hcoeff1[i]<<16);
-				accum2 <= accum2 + data[i] * (Hcoeff2[i]<<16);
-				accum3 <= accum3 + data[i] * (Hcoeff3[i]<<16);
-				accum4 <= accum4 + data[i] * (Hcoeff4[i]<<16);
-				accum5 <= accum5 + data[i] * (Hcoeff5[i]<<16);
-				accum6 <= accum6 + data[i] * (Hcoeff6[i]<<16);
-				accum7 <= accum7 + data[i] * (Hcoeff7[i]<<16);
-				//accum [j] <= $signed(accum[j]) + $signed(data[i]) * $signed(Hcoeff[j][i]*2^16);
-			end
+			data_1 = data_0;
+    		data_0 = datain; //receive input
+
+			countaddress <= 0;
+
+			STATE <= 0;
+			NEXTSTATE <= 0;
 		end
+
+		//receive input
+    	Hcoeff0_0 <= coeff0[17:0]; 
+		Hcoeff0_1 <= coeff0[35:18];
+
+		Hcoeff1_0 <= coeff1[17:0];
+		Hcoeff1_1 <= coeff1[35:18];
+		
+		Hcoeff2_0 <= coeff2[17:0];
+		Hcoeff2_1 <= coeff2[35:18];
+		
+		Hcoeff3_0 <= coeff3[17:0];
+		Hcoeff3_1 <= coeff3[35:18];
+		
+		Hcoeff4_0 <= coeff4[17:0];
+		Hcoeff4_1 <= coeff4[35:18];
+		
+		Hcoeff5_0 <= coeff5[17:0];
+		Hcoeff5_1 <= coeff5[35:18];
+		
+		Hcoeff6_0 <= coeff6[17:0];
+		Hcoeff6_1 <= coeff6[35:18];
+		
+		Hcoeff7_0 <= coeff7[17:0];
+		Hcoeff7_1 <= coeff7[35:18];
+
+		STATE <= NEXTSTATE;
 	end
+
+	case (STATE) 
+		2'b10 : 	begin
+					accum0 <= accum0 + data_0 * Hcoeff0_0 + data_1 * Hcoeff0_1;
+					accum1 <= accum1 + data_0 * Hcoeff1_0 + data_1 * Hcoeff1_1;
+					accum2 <= accum2 + data_0 * Hcoeff2_0 + data_1 * Hcoeff2_1;
+					accum3 <= accum3 + data_0 * Hcoeff3_0 + data_1 * Hcoeff3_1;
+					accum4 <= accum4 + data_0 * Hcoeff4_0 + data_1 * Hcoeff4_1;
+					accum5 <= accum5 + data_0 * Hcoeff5_0 + data_1 * Hcoeff5_1;
+					accum6 <= accum6 + data_0 * Hcoeff6_0 + data_1 * Hcoeff6_1;
+					accum7 <= accum7 + data_0 * Hcoeff7_0 + data_1 * Hcoeff7_1;
+
+					countaddress <= countaddress + 1;
+					end
+
+		default : 	countaddress <= 6'd0;
+	endcase
+
 end
 
-
+always @*
+	case (STATE)
+		2'b00 : 						  NEXTSTATE <= 2'b01;
+		2'b01 : 						  NEXTSTATE <= 2'b10;
+		2'b10 : if(countaddress == 6'd63) NEXTSTATE <= 2'b11; 
+		2'b11 : if(din_enable)		 	  NEXTSTATE <= 2'b00;
+		default: 						  NEXTSTATE <= 2'b00;
+	endcase
+	
 //Assing outputs
 assign coeffaddress = countaddress;
 
-assign dataout0 = accum0 [31:16];
-assign dataout1 = accum1 [31:16];
-assign dataout2 = accum2 [31:16];
-assign dataout3 = accum3 [31:16];
-assign dataout4 = accum4 [31:16];
-assign dataout5 = accum5 [31:16];
-assign dataout6 = accum6 [31:16];
-assign dataout7 = accum7 [31:16];
+assign dataout0 = accum0 [15:0]/*[31:16]*/;
+assign dataout1 = accum1 [15:0]/*[31:16]*/;
+assign dataout2 = accum2 [15:0]/*[31:16]*/;
+assign dataout3 = accum3 [15:0]/*[31:16]*/;
+assign dataout4 = accum4 [15:0]/*[31:16]*/;
+assign dataout5 = accum5 [15:0]/*[31:16]*/;
+assign dataout6 = accum6 [15:0]/*[31:16]*/;
+assign dataout7 = accum7 [15:0]/*[31:16]*/;
 
 
 endmodule
